@@ -1,10 +1,12 @@
 from flask import render_template
 from app import app
 from app.forms import LoginForm
+from app.message import MessageForm
 
 @app.route('/index')
 @app.route('/')
 def index():
+    
     user = {
         'username': 'Ayushi',
         'address': 'JEC'
@@ -20,8 +22,8 @@ def index():
             'body': 'Kharab mausam hai!'
        }
     ]
-
-    return render_template('index.html', user=user, posts=posts)
+    msg = MessageForm()
+    return render_template('index.html', user=user, posts=posts, msg=msg)
 
 
 @app.route('/login')

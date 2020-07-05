@@ -13,5 +13,23 @@
     </p>
 </div>
 {% endfor %}
+<style type="text/css">
+		div.a {
+	  
+	  -moz-text-align-last: justify; /* For Firefox prior 58.0 */
+	}
+</style>
+		<footer>
+			<form action="" method="post" novalidate>
+		    <div class="a">
+		    <p>
+		        {{ msg.message.label }} : 
+		        {{ msg.message }}
+
+		        {{ msg.send() }}
+		    </p>
+		    </div>
+		</form>
+		</footer>
 
 {% endblock %}

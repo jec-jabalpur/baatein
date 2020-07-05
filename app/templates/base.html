@@ -5,6 +5,46 @@
     {% else %}
     <title>HOMEPAGE</title>
     {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+		body {
+		  background-color: lightblue;
+		  text-align: center;
+		}
+
+		h1 {
+		  color: blue;
+		  text-align: center;
+		  margin-bottom: 25px;
+		}
+
+		p {
+		  font-family: verdana;
+		  font-size: 20px;
+		  color: black;
+		}
+
+		input[type=text] {
+		  border: 2px blue;
+		  border-radius: 4px;
+		}
+		input[type=password] {
+		  border: 2px blue;
+		  border-radius: 4px;
+		}
+		input[type=submit]{
+			background-color: blue;
+			border: black;
+			color: black;
+			padding: 12px 32px;
+			text-decoration: none;
+			margin: 1px 1px;
+			cursor: pointer;
+		}
+		.input[type=submit]:hover {opacity: 1}
+	</style>
+
  </head>
  <body>
     {% block content %} {% endblock %}
