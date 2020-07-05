@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1> Aur bataao {{ user.username }}</h1>
+<h1> Ghar ka pata  -- {{ user.address }}</h1>
+
+
+{% for post in posts %}
+<div>
+    <p>
+        {{ post.author.username }} --> <b> {{ post.body }} </b>
+    </p>
+</div>
+{% endfor %}
+
+{% endblock %}
