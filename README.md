@@ -33,7 +33,6 @@ Python project for college students
 
 - Run the DB migrations
     ```
-    flask db init
     flask db upgrade
 
     ```
