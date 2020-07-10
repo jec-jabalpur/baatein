@@ -34,7 +34,6 @@ Python project for college students
 - Run the DB migrations
     ```
     flask db upgrade
-
     ```
 
 - Run the application
