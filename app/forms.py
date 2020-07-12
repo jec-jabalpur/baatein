@@ -46,6 +46,7 @@ class EditProfileForm(FlaskForm):
 
 
     def validate_username(self, username):
+        user = None
         if username.data != self.original_username:
             user = User.query.filter_by(username=self.username.data).first()
         if user is not None:
