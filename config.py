@@ -15,4 +15,4 @@ class Config:
     MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL') is not None
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    ADMINS = ['jec.jabalpur.projects@gmail.com']
+    ADMINS = ['yy@yy.com']
