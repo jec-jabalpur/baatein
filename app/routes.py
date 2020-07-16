@@ -8,7 +8,8 @@ from flask_login import login_required
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from app.forms import EditProfileForm
-from app.models import User
+from app.forms import EmptyForm, PostForm
+from app.models import User, Post
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -20,27 +21,25 @@ def before_request():
         db.session.commit()
 
 
-@app.route('/index')
-@app.route('/')
+@app.route('/index', methods=["GET", "POST"])
+@app.route('/', methods=["GET", "POST"])
 @login_required
 def index():
-    user = {
-        'username': 'Ayushi',
-        'address': 'JEC'
-    }
+    
+    form = PostForm()
 
-    posts = [
-       {
-            'author': {'username': 'Jay'},
-            'body': 'Aaj mausam bada beimaan hai!'
-       },
-       {
-            'author': {'username': 'Taaniya'},
-            'body': 'Kharab mausam hai!'
-       }
-    ]
+    if form.validate_on_submit():
+        post = Post(body=form.post.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
 
-    return render_template('index.html', posts=posts)
+        flash('Your post is now live!')
+        return redirect(url_for('index'))
+
+
+    posts = current_user.followed_posts().all()
+
+    return render_template('index.html', posts=posts, form=form)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -99,13 +98,16 @@ def register():
 @app.route('/user/<username>')
 @login_required
 def user(username):
+
+    form = EmptyForm()
+
     user = User.query.filter_by(username=username).first_or_404()
     posts = [
         {'author': user, 'body': 'test post #1'},
         {'author': user, 'body': 'test post #2'}
     ]
 
-    return render_template('user.html', user=user, posts=posts)
+    return render_template('user.html', user=user, posts=posts, form=form)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -127,10 +129,54 @@ def edit_profile():
     return render_template('edit_profile.html', title="Edit Profile", form=form)
 
 
+@app.route('/follow/<username>', methods=["POST"])
+@login_required
+def follow(username):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            flash('User {} not found'.format(username))
+            return redirect(url_for('index'))
+
+        if (user == current_user):
+            flash('You cannot follow yourself!')
+            return redirect(url_for('user', username=username))
+
+        current_user.follow(user)
+
+        db.session.commit()
+
+        flash('You are now following {}!'.format(username))
+        return redirect(url_for('user', username=username))
+
+    else:
+
+        return redirect(url_for('index'))
 
 
+@app.route('/unfollow/<username>', methods=["POST"])
+@login_required
+def unfollow(username):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            flash('User {} not found'.format(username))
+            return redirect(url_for('index'))
 
+        if (user == current_user):
+            flash('You cannot unfollow yourself!')
+            return redirect(url_for('user', username=username))
 
+        current_user.unfollow(user)
 
+        db.session.commit()
 
+        flash('You have unfollowed {}!'.format(username))
+        return redirect(url_for('user', username=username))
+
+    else:
+
+        return redirect(url_for('index'))
 

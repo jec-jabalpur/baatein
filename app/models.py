@@ -12,6 +12,7 @@ followers = db.Table('followers',
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
 
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
@@ -55,8 +56,41 @@ class User(UserMixin, db.Model):
             .filter(followers.c.followed_id == user.id) \
             .count() > 0
 
-    # Create another method to retrieve the posts of the followed users
-    # Single query
+    def followed_posts(self):
+        '''
+        self.id -> The intended User
+        Objective -> to obtain all the posts of the users that self follows
+        Reason -> Because we need to show the posts of users followed by self.
+
+        Post (id, body, timestamp, user_id)
+        followers (follower_id, followed_id)
+        .
+        .
+        JOIN Post and followers
+        .
+        .
+        .
+        JOIN CONDITION -> (Post.user_id == followers.c.followed_id)
+        .
+        .
+        FILTER
+        CRITERIA OF FILTRATION -> self USER is following the author of the posts.
+        self.id == followers.c.follower_id
+        .
+        .
+        .
+        SORT IN DESCENDING ORDER OF POSTING
+        order_by(Post.timestamp.desc())
+        '''
+
+        followed_posts = Post.query.join(
+            followers, (followers.c.followed_id == Post.user_id)).filter(
+            followers.c.follower_id == self.id)
+
+        own_posts = Post.query.filter_by(user_id=self.id)
+
+        return followed_posts.union(own_posts).order_by(Post.timestamp.desc())
+
 
 @login.user_loader
 def load_user(id):
@@ -71,3 +105,4 @@ class Post(db.Model):
 
     def __repr__(self):
         return '(Post {})'.format(self.body)
+
