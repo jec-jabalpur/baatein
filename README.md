@@ -17,7 +17,7 @@ Python project for college students
     ```
     python -m venv venv
     source venv/bin/activate (for Linux)
-    venv/Scripts/activate (for Windows)
+    venv\Scripts\activate (for Windows)
     ```
 
 - Install all packages
