@@ -1,10 +1,9 @@
 FLASK_APP=baatein.py
 SECRET_KEY=abracadabra
 FLASK_ENV=development
-FLASK_DEBUG=1
-MAIL_USERNAME=xx@xx.xx
-MAIL_PASSWORD=xxxxxxxx
+FLASK_DEBUG=0
+MAIL_USERNAME=demo.flask.app.jec.one@gmail.com
+MAIL_PASSWORD=jec.app.flask.demo
 MAIL_SERVER="smtp.gmail.com"
 MAIL_PORT=587
 MAIL_USE_TLS=True
-MAIL_USE_SSL=False

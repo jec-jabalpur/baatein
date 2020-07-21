@@ -7,6 +7,8 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
             "sqlite:///" + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    POSTS_PER_PAGE = 3
+
     GRAVATAR_SERVICE = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'
 
     MAIL_SERVER = os.environ.get('MAIL_SERVER') or "smtp.gmail.com"
@@ -15,4 +17,4 @@ class Config:
     MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL') is not None
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    ADMINS = ['yy@yy.com']
+    ADMINS = ['jec.jabalpur.projects@gmail.com']
