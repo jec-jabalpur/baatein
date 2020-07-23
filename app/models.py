@@ -5,6 +5,8 @@ from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 from datetime import datetime
 from hashlib import md5
+import jwt
+from time import time
 
 
 followers = db.Table('followers',
