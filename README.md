@@ -36,6 +36,9 @@ Python project for college students
     flask db upgrade
     ```
 
+- Install Elasticsearch from the following link
+    https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html
+
 - Run the application
     ```
     flask run
