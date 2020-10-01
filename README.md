@@ -1,4 +1,4 @@
-# baatein
+# baatein ( बातें )
 Python project for college students
 
 ## Setup
